@@ -2,13 +2,21 @@
 
 Usage:
     pyuicfg -g
+    pyuicfg -g -i
     pyuicfg -f -g
+    pyuicfg -f -g -i
     pyuicfg -g --pyqt5
+    pyuicfg -g -i --pyqt5
     pyuicfg -f -g --pyqt5
+    pyuicfg -f -g -i --pyqt5
     pyuicfg -g --pyside
+    pyuicfg -g -i --pyside
     pyuicfg -f -g --pyside
+    pyuicfg -f -g -i --pyside
     pyuicfg -g --pyside2
+    pyuicfg -g -i --pyside2
     pyuicfg -f -g --pyside2
+    pyuicfg -f -g -i --pyside2
     pyuicfg -a SOURCE_FILE DESTINATION_PACKAGE
     pyuicfg -r SOURCE_FILE
     pyuicfg (-h | --help)
@@ -19,6 +27,7 @@ Options:
     --version                             Show version
     -f                                    Ask no question
     -g                                    Generate pyuic.json
+    -i                                    Use from import
     -a SOURCE_FILE DESTINATION_PACKAGE    Add file to pyuic.json
     -r SOURCE_FILE                        Remove file from pyuic.json
     --pyqt5                               Generate a pyuic.json file for PyQt5 instead of PyQt4
@@ -46,6 +55,7 @@ def main():
     arguments = docopt(__doc__, version=__version__)
     force = arguments['-f']
     generate = arguments['-g']
+    from_import = arguments['-i']
     file_to_add = arguments['-a']
     destination_package = arguments['DESTINATION_PACKAGE']
     file_to_remove = arguments['-r']
@@ -57,7 +67,7 @@ def main():
                            'it? (y/N) ').lower()
             if choice != 'y':
                 return
-        cfg.generate(api)
+        cfg.generate(api, from_import)
     elif file_to_add:
         cfg.add(file_to_add, destination_package)
     elif file_to_remove:

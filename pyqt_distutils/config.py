@@ -46,30 +46,30 @@ class Config:
         with open('pyuic.json', 'w') as f:
             json.dump(self.__dict__, f, indent=4, sort_keys=True)
 
-    def generate(self, api):
+    def generate(self, api, from_import):
         if api == QtApi.pyqt4:
             self.pyrcc = 'pyrcc4'
             self.pyrcc_options = '-py3'
             self.pyuic = 'pyuic4'
-            self.pyuic_options = '--from-import'
+            self.pyuic_options = '--from-import' if from_import else ''
             self.files[:] = []
         elif api == QtApi.pyqt5:
             self.pyrcc = 'pyrcc5'
             self.pyrcc_options = ''
             self.pyuic = 'pyuic5'
-            self.pyuic_options = '--from-import'
+            self.pyuic_options = '--from-import' if from_import else ''
             self.files[:] = []
         elif api == QtApi.pyside:
             self.pyrcc = 'pyside-rcc'
             self.pyrcc_options = '-py3'
             self.pyuic = 'pyside-uic'
-            self.pyuic_options = '--from-import'
+            self.pyuic_options = '--from-import' if from_import else ''
             self.files[:] = []
         elif api == QtApi.pyside2:
             self.pyrcc = 'pyside2-rcc'
             self.pyrcc_options = ''
             self.pyuic = 'pyside2-uic'
-            self.pyuic_options = '--from-import'
+            self.pyuic_options = '--from-import' if from_import else ''
             self.files[:] = []
         self.save()
         write_message('pyuic.json generated', 'green')
